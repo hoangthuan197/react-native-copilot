@@ -79,5 +79,6 @@ export interface CopilotOptions {
   arrowSize?: number
   margin?: number
   stopOnOutsideClick?: boolean;
+  nextOnOutsideClick?: boolean;
   backdropColor?: string;
 }
