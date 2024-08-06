@@ -501,6 +501,7 @@ var CopilotModal = forwardRef(
     svgMaskPath,
     stopOnOutsideClick = false,
     nextOnOutsideClick = false,
+    maskClick,
     arrowColor = "#fff",
     arrowSize = ARROW_SIZE,
     margin = MARGIN
@@ -723,7 +724,7 @@ var CopilotModal = forwardRef(
           animationDuration,
           backdropColor,
           svgMaskPath,
-          onClick: handleMaskClick,
+          onClick: maskClick || handleMaskClick,
           currentStep
         }
       );

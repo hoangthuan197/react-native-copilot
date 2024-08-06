@@ -68,6 +68,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
       svgMaskPath,
       stopOnOutsideClick = false,
       nextOnOutsideClick = false,
+      maskClick,
       arrowColor = "#fff",
       arrowSize = ARROW_SIZE,
       margin = MARGIN
@@ -330,7 +331,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           animationDuration={animationDuration}
           backdropColor={backdropColor}
           svgMaskPath={svgMaskPath}
-          onClick={handleMaskClick}
+          onClick={maskClick || handleMaskClick}
           currentStep={currentStep}
         />
       );
