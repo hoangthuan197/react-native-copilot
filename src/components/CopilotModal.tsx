@@ -68,14 +68,14 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
       svgMaskPath,
       stopOnOutsideClick = false,
       nextOnOutsideClick = false,
-      maskClick,
+      lastStepList,
       arrowColor = "#fff",
       arrowSize = ARROW_SIZE,
-      margin = MARGIN
+      margin = MARGIN,
     },
-    ref
+    ref,
   ) {
-    const { stop, currentStep, visible,goToNext,isLastStep } = useCopilot();
+    const { stop, currentStep, visible, goToNext, isLastStep } = useCopilot();
     const [tooltipStyles, setTooltipStyles] = useState({});
     const [arrowStyles, setArrowStyles] = useState({});
     const [animatedValues] = useState({
@@ -84,7 +84,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
     });
     const layoutRef = useRef(makeDefaultLayout());
     const [layout, setLayout] = useState<LayoutRectangle | undefined>(
-      undefined
+      undefined,
     );
     const [maskRect, setMaskRect] = useState<LayoutRectangle | undefined>();
 
@@ -170,7 +170,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
         if (horizontalPosition === "left") {
           tooltip.right = Math.max(
             newMeasuredLayout.width - (rect.x + rect.width),
-            0
+            0,
           );
           tooltip.right =
             tooltip.right === 0 ? tooltip.right + margin : tooltip.right;
@@ -184,9 +184,9 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           arrow.left = tooltip.left + margin;
         }
 
-        sanitize(arrow)
-        sanitize(tooltip)
-        sanitize(rect)
+        sanitize(arrow);
+        sanitize(tooltip);
+        sanitize(rect);
 
         const animate = [
           ["top", rect.y],
@@ -202,7 +202,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
                 easing,
                 useNativeDriver: false,
               });
-            })
+            }),
           ).start();
         } else {
           animate.forEach(([key, value]) => {
@@ -229,7 +229,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
         isAnimated,
         arrowSize,
         margin,
-      ]
+      ],
     );
 
     const animateMove = useCallback<CopilotModalHandle["animateMove"]>(
@@ -246,7 +246,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           });
         });
       },
-      [_animateMove]
+      [_animateMove],
     );
 
     const reset = () => {
@@ -267,9 +267,11 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
     const handleMaskClick = () => {
       if (stopOnOutsideClick) {
         handleStop();
-      }
-      else if (nextOnOutsideClick) {
-        isLastStep ? handleStop() : handleNext();
+      } else if (nextOnOutsideClick) {
+        const validateLastStep = Object.values(lastStepList).includes(
+          currentStep?.name,
+        );
+        isLastStep || validateLastStep ? handleStop() : handleNext();
       }
     };
 
@@ -280,7 +282,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           animateMove,
         };
       },
-      [animateMove]
+      [animateMove],
     );
 
     const modalVisible = containerVisible || visible;
@@ -331,7 +333,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           animationDuration={animationDuration}
           backdropColor={backdropColor}
           svgMaskPath={svgMaskPath}
-          onClick={maskClick || handleMaskClick}
+          onClick={handleMaskClick}
           currentStep={currentStep}
         />
       );
@@ -368,7 +370,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
         </>
       );
     }
-  }
+  },
 );
 
 const floorify = (obj: Record<string, any>) => {
@@ -391,4 +393,4 @@ const removeNan = (obj: Record<string, any>) => {
 const sanitize = (obj: Record<any, any>) => {
   floorify(obj);
   removeNan(obj);
-}
+};

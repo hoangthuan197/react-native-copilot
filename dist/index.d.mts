@@ -41,7 +41,7 @@ interface CopilotOptions {
     arrowSize?: number;
     margin?: number;
     stopOnOutsideClick?: boolean;
-    maskClick?: () => void;
+    lastStepList?: any;
     nextOnOutsideClick?: boolean;
     backdropColor?: string;
 }

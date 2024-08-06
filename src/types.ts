@@ -69,17 +69,17 @@ export interface CopilotOptions {
   animationDuration?: number;
   tooltipComponent?: React.ComponentType<TooltipProps>;
   tooltipStyle?: ViewStyle;
-  stepNumberComponent?: React.ComponentType<any >;
+  stepNumberComponent?: React.ComponentType<any>;
   animated?: boolean;
   labels?: Labels;
   androidStatusBarVisible?: boolean;
   svgMaskPath?: SvgMaskPathFunction;
   verticalOffset?: number;
   arrowColor?: string;
-  arrowSize?: number
-  margin?: number
+  arrowSize?: number;
+  margin?: number;
   stopOnOutsideClick?: boolean;
-  maskClick?: () => void;
+  lastStepList?: any;
   nextOnOutsideClick?: boolean;
   backdropColor?: string;
 }

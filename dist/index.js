@@ -493,7 +493,7 @@ var CopilotModal = (0, import_react5.forwardRef)(
     svgMaskPath,
     stopOnOutsideClick = false,
     nextOnOutsideClick = false,
-    maskClick,
+    lastStepList,
     arrowColor = "#fff",
     arrowSize = ARROW_SIZE,
     margin = MARGIN
@@ -663,7 +663,10 @@ var CopilotModal = (0, import_react5.forwardRef)(
       if (stopOnOutsideClick) {
         handleStop();
       } else if (nextOnOutsideClick) {
-        isLastStep ? handleStop() : handleNext();
+        const validateLastStep = Object.values(lastStepList).includes(
+          currentStep == null ? void 0 : currentStep.name
+        );
+        isLastStep || validateLastStep ? handleStop() : handleNext();
       }
     };
     (0, import_react5.useImperativeHandle)(
@@ -716,7 +719,7 @@ var CopilotModal = (0, import_react5.forwardRef)(
           animationDuration,
           backdropColor,
           svgMaskPath,
-          onClick: maskClick || handleMaskClick,
+          onClick: handleMaskClick,
           currentStep
         }
       );
